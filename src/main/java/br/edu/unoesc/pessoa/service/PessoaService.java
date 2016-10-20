@@ -29,5 +29,9 @@ public class PessoaService {
 	public Pessoa findOne(Long id) {
 		return repository.findOne(id);
 	}
+	
+	public Pessoa findFirstByNome(String nome) {
+		return repository.findFirstByNome(nome);
+	}
 
 }

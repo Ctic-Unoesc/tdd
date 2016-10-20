@@ -6,4 +6,6 @@ import br.edu.unoesc.pessoa.model.Pessoa;
 
 public interface PessoaRepository extends JpaRepository<Pessoa, Long> {
 
+	public Pessoa findFirstByNome(String nome);
+	
 }
