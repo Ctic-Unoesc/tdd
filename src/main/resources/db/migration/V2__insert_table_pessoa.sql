@@ -1,0 +1,1 @@
+insert into PESSOA (id, nome) values (1, 'Edivilson');
