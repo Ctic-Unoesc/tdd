@@ -1,5 +1,6 @@
 package br.edu.unoesc.pessoa.controller;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -13,6 +14,9 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import com.gargoylesoftware.htmlunit.WebClient;
+import com.gargoylesoftware.htmlunit.html.HtmlPage;
+
 import br.edu.unoesc.pessoa.builder.PessoaBuilder;
 import br.edu.unoesc.pessoa.model.Pessoa;
 import br.edu.unoesc.pessoa.service.PessoaService;
@@ -23,6 +27,9 @@ public class PessoaControllerTest {
 
 	@Autowired
 	private MockMvc mvc;
+
+	@Autowired
+	private WebClient webClient;
 
 	@MockBean
 	private PessoaService pessoaService;
@@ -37,6 +44,15 @@ public class PessoaControllerTest {
 		this.mvc.perform(
 				get("/pessoa/find").param("id", pessoa.getId().toString()).accept(MediaType.APPLICATION_JSON_VALUE))
 				.andExpect(status().isOk());
+	}
+
+	@Test
+	public void testIndex() throws Exception {
+		Pessoa pessoa = new PessoaBuilder().comId(1l).comNome("Edivilson").build();
+		given(this.pessoaService.findOne(pessoa.getId())).willReturn(pessoa);
+
+		HtmlPage page = this.webClient.getPage("/pessoa/index");
+		assertThat(page.getTitleText()).isEqualTo("Unoesc TDD");
 	}
 
 }

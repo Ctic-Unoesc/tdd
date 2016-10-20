@@ -67,13 +67,15 @@
 			<scope>runtime</scope>
 		</dependency>
 		
-		<!-- Bean Validation / Hibernate Validator -->
   		<dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
-            <version>5.2.4.Final</version>
         </dependency>
 
+  		<dependency>
+  			<groupId>net.sourceforge.htmlunit</groupId>
+  			<artifactId>htmlunit</artifactId>
+  		</dependency>
 	</dependencies>
 
 	<build>
