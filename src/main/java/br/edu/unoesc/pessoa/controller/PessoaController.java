@@ -3,7 +3,9 @@ package br.edu.unoesc.pessoa.controller;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -40,8 +42,12 @@ public class PessoaController {
 	}
 
 	@GetMapping(value = "/find", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Pessoa findOne(@RequestParam(value = "id") Long id) {
-		return pessoaService.findOne(id);
+	public ResponseEntity<Pessoa> findOne(@RequestParam(value = "id") Long id) {
+		Pessoa pessoa = pessoaService.findOne(id);
+		if (pessoa == null) {
+			return new ResponseEntity<Pessoa>(HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<Pessoa>(pessoa, HttpStatus.OK);
 	}
 
 }
